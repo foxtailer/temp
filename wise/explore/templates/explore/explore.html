@@ -36,6 +36,17 @@
 {% block main %}
 <div class="wisdom_inner">
   <p class="wisdom" id="wisdom">{{wisdom.text}}</p>
+
+  <p class="tags">Tags: 
+    {% for tag in wisdom.tags.all %}
+        {% comment %} <a href="{% url "blog:post_list_by_tag" tag.slug %}"> {% endcomment %}
+        <a href="" id="tag-link">
+        {{ tag.name }}
+        </a>    
+    {% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </p>
+
   <button class="wisdom__next" id="new-wisdom-button">
     <svg height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 478.448 478.448" xml:space="preserve">
@@ -85,6 +96,7 @@
           .then(data => {
             console.log(data)  //  CONSOLE! DEL
               document.getElementById('wisdom').innerText = data.wisdom +" "+ data.wisdom_id +" "+ data.wisdom_author;
+              document.getElementById('tag-link').innerText = data.tag
           })
           .catch(error => console.error('Error:', error));
   });
