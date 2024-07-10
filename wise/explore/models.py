@@ -24,7 +24,7 @@ class Wisdom(models.Model):
     report = models.PositiveIntegerField(default=0, verbose_name='report')
     accepted = models.ManyToManyField(User, related_name='accepted', blank=True)
     reply = models.BooleanField(default=True)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     @classmethod
     def wisdome_choice(cls):
