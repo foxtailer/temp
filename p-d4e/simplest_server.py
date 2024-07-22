@@ -29,6 +29,7 @@ def create_server():
             for request_data in parse_data:
                 data_list += f'<li>{request_data[1]}</li>'
             data += f'<html><body><h1>Hello world!</h1><ol>{data_list}<ol></body></html>\r\n\r\n'
+            print(data)
             client_socket.sendall(data.encode())
             client_socket.shutdown(SHUT_WR)
 
