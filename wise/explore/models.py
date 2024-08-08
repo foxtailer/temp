@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from main.models import User
 from taggit.managers import TaggableManager
 import random
 import string
@@ -22,6 +22,7 @@ class Wisdom(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posted')
     text = models.TextField(max_length=1000, verbose_name='text')
     report = models.PositiveIntegerField(default=0, verbose_name='report')
+    reported_by = models.ManyToManyField(User, related_name='reported_wisdoms', blank=True)
     accepted = models.ManyToManyField(User, related_name='accepted', blank=True)
     reply = models.BooleanField(default=True)
     tags = TaggableManager(blank=True)
@@ -33,4 +34,13 @@ class Wisdom(models.Model):
             return None
         random_index = random.randint(0, count - 1)
         return cls.objects.all()[random_index]
+
+        # wisdom_ids = cls.objects.values_list('id', flat=True)
+        # if not wisdom_ids:
+        #     return None
+        # random_id = random.choice(wisdom_ids)
+        # return cls.objects.filter(id=random_id).first()
+    
+    def __str__(self):
+        return self.text[:10] + "..."
 
